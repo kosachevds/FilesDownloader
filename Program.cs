@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FilesDownloader
 {
@@ -18,6 +19,21 @@ namespace FilesDownloader
         {
             var downloader = new Downloader(MaxSimultaneousDownloadings);
             await downloader.DownloadAllAsync(infos, ResultFolder);
+        }
+
+        static void PrintDotsWhile(Task task, int maxDots)
+        {
+            var dotCount = 0;
+            while (task.Status == TaskStatus.Running)
+            {
+                if (dotCount == maxDots)
+                {
+                    dotCount = 0;
+                    Console.Clear();
+                }
+                Console.Write(".");
+                ++dotCount;
+            }
         }
 
     }
