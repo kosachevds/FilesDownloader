@@ -10,6 +10,7 @@ class Downloader
 
     public Downloader(int simultaneousMax)
     {
+        this._maxSimultaneous = simultaneousMax;
         this._downloadings = new List<Task>(_maxSimultaneous);
     }
 
@@ -20,7 +21,7 @@ class Downloader
             this._downloadings.Remove(cancelledDownloading);
         }
         var newDownloading = DownloadFileAsync(url, filepath);
-        this._downloadings.Add(downloading);
+        this._downloadings.Add(newDownloading);
     }
 
     private async Task DownloadFileAsync(string url, string filepath)
