@@ -10,9 +10,5 @@ namespace FilesDownloader
             Console.WriteLine("Hello World!");
         }
 
-        static IEnumerable<DownloadingInfo> ReadInfos(string filename, char separator) {
-
-        }
-
     }
 }

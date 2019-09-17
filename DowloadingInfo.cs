@@ -1,9 +1,12 @@
+using System.IO;
+using System.Linq;
+
 class DownloadingInfo
 {
     public string Filename { get; set; }
     public string Url { get; set; }
 
-    static DownloadingInfo Parse(string strInfo)
+    public static DownloadingInfo Parse(string strInfo)
     {
         var lastSpace = strInfo.LastIndexOf(' ');
         var url = strInfo.Substring(lastSpace + 1);
@@ -13,5 +16,14 @@ class DownloadingInfo
             Filename = filename,
             Url = url
         };
+    }
+
+    public static IEnumerable<DownloadingInfo> ReadInfos(string filename, char separator)
+    {
+        var content = File.ReadAllText(filename);
+        return content
+            .Split(separator)
+            .Where(x => !System.String.IsNullOrWhiteSpace())
+            .Select(Parse);
     }
 }
