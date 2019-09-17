@@ -41,5 +41,7 @@ class Downloader
             var filename = System.IO.Path.Combine(directory, item.Filename);
             await DownloadAsync(item.Url, filename);
         }
+
+        await Task.WhenAll(this._downloadings);
     }
 }
