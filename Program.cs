@@ -12,7 +12,6 @@ namespace FilesDownloader
         const char FileInfoSeparator = ';';
         const int MaxDotCount = 10;
 
-
         static void Main(string[] args)
         {
             var infos = DownloadingInfo.ReadInfos(Filename, FileInfoSeparator);
@@ -39,7 +38,7 @@ namespace FilesDownloader
                 Console.Write(".");
                 ++dotCount;
             }
+            task.Wait();
         }
-
     }
 }
