@@ -29,7 +29,7 @@ class Downloader
         await client.DownloadFileTaskAsync(url, filepath);
     }
 
-    private async Task DownloadAllASync(IEnumerable<DownloadingInfo> infos, string directory)
+    public async Task DownloadAllAsync(IEnumerable<DownloadingInfo> infos, string directory)
     {
         if (!System.IO.Directory.Exists(directory))
         {
