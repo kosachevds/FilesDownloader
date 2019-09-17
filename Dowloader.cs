@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using System.IO;
 
 class Downloader
 {
@@ -26,5 +27,19 @@ class Downloader
     {
         var client = new WebClient();
         await client.DownloadFileTaskAsync(url, filepath);
+    }
+
+    private async Task DownloadAllASync(IEnumerable<DownloadingInfo> infos, string directory)
+    {
+        if (!System.IO.Directory.Exists(directory))
+        {
+            System.IO.Directory.CreateDirectory(directory);
+        }
+
+        foreach (var item in infos)
+        {
+            var filename = System.IO.Path.Combine(directory, item.Filename);
+            await DownloadAsync(item.Url, filename);
+        }
     }
 }
