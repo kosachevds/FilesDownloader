@@ -17,7 +17,7 @@ namespace FilesDownloader
         {
             var infos = DownloadingInfo.ReadInfos(Filename, FileInfoSeparator);
             var downloading = Download(infos, MaxSimultaneousDownloadings);
-            PrintDotsWhile(downloading, maxDots);
+            PrintDotsWhile(downloading, MaxDotCount);
         }
 
         static async Task Download(IEnumerable<DownloadingInfo> infos, int maxSimultaneous)
