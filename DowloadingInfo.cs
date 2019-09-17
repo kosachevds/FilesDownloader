@@ -24,7 +24,7 @@ class DownloadingInfo
         var content = File.ReadAllText(filename);
         return content
             .Split(separator)
-            .Where(x => !System.String.IsNullOrWhiteSpace())
+            .Where(x => !System.String.IsNullOrWhiteSpace(x))
             .Select(Parse);
     }
 }
