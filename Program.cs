@@ -9,15 +9,20 @@ namespace FilesDownloader
         const string Filename = "test_tracks.txt";
         const string ResultFolder = "test_files";
         const int MaxSimultaneousDownloadings = 8;
+        const char FileInfoSeparator = ';';
+        const int MaxDotCount = 10;
+
 
         static void Main(string[] args)
         {
-
+            var infos = DownloadingInfo.ReadInfos(Filename, FileInfoSeparator);
+            var downloading = Download(infos, MaxSimultaneousDownloadings);
+            PrintDotsWhile(downloading, maxDots);
         }
 
-        static async Task Download(IEnumerable<DownloadingInfo> infos)
+        static async Task Download(IEnumerable<DownloadingInfo> infos, int maxSimultaneous)
         {
-            var downloader = new Downloader(MaxSimultaneousDownloadings);
+            var downloader = new Downloader(maxSimultaneous);
             await downloader.DownloadAllAsync(infos, ResultFolder);
         }
 
