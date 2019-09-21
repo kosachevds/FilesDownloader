@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using System.IO;
 
 class Downloader
 {
@@ -29,14 +30,25 @@ class Downloader
     private async Task DownloadFileAsync(string url, string filepath)
     {
         var client = new WebClient();
-        await client.DownloadFileTaskAsync(url, filepath);
+        try
+        {
+            await client.DownloadFileTaskAsync(url, filepath);
+        }
+        catch (WebException e)
+        {
+            if (this.Logger == null)
+            {
+                throw;
+            }
+            this.Logger.LogError(e, $"Downloading of {Path.GetFileName(filepath)} failed");
+        }
     }
 
     public async Task DownloadAllAsync(IEnumerable<DownloadingInfo> infos, string directory)
     {
-        if (!System.IO.Directory.Exists(directory))
+        if (!Directory.Exists(directory))
         {
-            System.IO.Directory.CreateDirectory(directory);
+            Directory.CreateDirectory(directory);
         }
 
         foreach (var item in infos)
