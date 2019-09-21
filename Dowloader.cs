@@ -14,7 +14,7 @@ class Downloader
         this._downloadings = new List<Task>(_maxSimultaneous);
     }
 
-    public string LogFilename {get; set; }
+    public string LogFilename { get; set; }
 
     public async Task DownloadAsync(string url, string filepath)
     {
