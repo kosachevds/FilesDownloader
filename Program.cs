@@ -20,7 +20,7 @@ namespace FilesDownloader
             var downloading = Download(infos, MaxSimultaneousDownloadings);
             PrintDotsWhile(downloading, MaxDotCount);
 
-            Console.WriteLine("Done!");
+            Console.WriteLine("\nDone!");
         }
 
         static async Task Download(IEnumerable<DownloadingInfo> infos, int maxSimultaneous)
@@ -33,7 +33,7 @@ namespace FilesDownloader
         static void PrintDotsWhile(Task task, int maxDots)
         {
             var dotCount = 0;
-            while (task.Status == TaskStatus.Running)
+            while (!task.IsCompleted)
             {
                 if (dotCount == maxDots)
                 {
@@ -42,6 +42,7 @@ namespace FilesDownloader
                 }
                 Console.Write(".");
                 ++dotCount;
+                Task.Delay(250).Wait();
             }
             task.Wait();
         }
