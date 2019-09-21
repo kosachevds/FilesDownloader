@@ -39,8 +39,11 @@ class Downloader
             {
                 throw;
             }
-            await LogToFileAsync(this.LogFilename,
-                $"Downloading of {Path.GetFileName(filepath)} failed with {e}");
+            lock(this.LogFilename)
+            {
+                LogToFile(this.LogFilename,
+                    $"Downloading of {Path.GetFileName(filepath)} failed with {e}");
+            }
         }
     }
 
@@ -60,8 +63,8 @@ class Downloader
         await Task.WhenAll(this._downloadings);
     }
 
-    private async Task LogToFileAsync(string filename, string message)
+    private void LogToFile(string filename, string message)
     {
-        await File.AppendAllTextAsync(filename, message);
+        File.AppendAllText(filename, message);
     }
 }
