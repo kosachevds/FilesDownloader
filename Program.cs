@@ -11,6 +11,7 @@ namespace FilesDownloader
         const int MaxSimultaneousDownloadings = 8;
         const char FileInfoSeparator = ';';
         const int MaxDotCount = 10;
+        const string LogFilename = "errors.txt";
 
         static void Main(string[] args)
         {
@@ -22,6 +23,7 @@ namespace FilesDownloader
         static async Task Download(IEnumerable<DownloadingInfo> infos, int maxSimultaneous)
         {
             var downloader = new Downloader(maxSimultaneous);
+            downloader.LogFilename = LogFilename;
             await downloader.DownloadAllAsync(infos, ResultFolder);
         }
 

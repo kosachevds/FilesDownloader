@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using System.IO;
 
 class Downloader
@@ -15,7 +14,7 @@ class Downloader
         this._downloadings = new List<Task>(_maxSimultaneous);
     }
 
-    public ILogger Logger {get; set; }
+    public string LogFilename {get; set; }
 
     public async Task DownloadAsync(string url, string filepath)
     {
@@ -36,11 +35,12 @@ class Downloader
         }
         catch (WebException e)
         {
-            if (this.Logger == null)
+            if (System.String.IsNullOrEmpty(this.LogFilename))
             {
                 throw;
             }
-            this.Logger.LogError(e, $"Downloading of {Path.GetFileName(filepath)} failed");
+            await LogToFileAsync(this.LogFilename,
+                $"Downloading of {Path.GetFileName(filepath)} failed with {e}");
         }
     }
 
@@ -58,5 +58,10 @@ class Downloader
         }
 
         await Task.WhenAll(this._downloadings);
+    }
+
+    private async Task LogToFileAsync(string filename, string message)
+    {
+        await File.AppendAllTextAsync(filename, message);
     }
 }
