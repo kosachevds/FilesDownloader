@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 class Downloader
 {
@@ -12,6 +13,8 @@ class Downloader
         this._maxSimultaneous = simultaneousMax;
         this._downloadings = new List<Task>(_maxSimultaneous);
     }
+
+    public ILogger Logger {get; set; }
 
     public async Task DownloadAsync(string url, string filepath)
     {
