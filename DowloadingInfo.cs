@@ -10,8 +10,8 @@ class DownloadingInfo
     public static DownloadingInfo Parse(string strInfo)
     {
         var lastSpace = strInfo.LastIndexOf(' ');
-        var url = strInfo.Substring(lastSpace + 1);
-        var filename = strInfo.Substring(0, lastSpace);
+        var url = strInfo.Substring(lastSpace + 1).Trim();
+        var filename = strInfo.Substring(0, lastSpace).Trim();
         return new DownloadingInfo
         {
             Filename = filename,
