@@ -15,9 +15,12 @@ namespace FilesDownloader
 
         static void Main(string[] args)
         {
+            RemoveIfExists(LogFilename);
             var infos = DownloadingInfo.ReadInfos(Filename, FileInfoSeparator);
             var downloading = Download(infos, MaxSimultaneousDownloadings);
             PrintDotsWhile(downloading, MaxDotCount);
+
+            Console.WriteLine("Done!");
         }
 
         static async Task Download(IEnumerable<DownloadingInfo> infos, int maxSimultaneous)
@@ -41,6 +44,14 @@ namespace FilesDownloader
                 ++dotCount;
             }
             task.Wait();
+        }
+
+        static void RemoveIfExists(string filename)
+        {
+            if (System.IO.File.Exists(filename))
+            {
+                System.IO.File.Delete(filename);
+            }
         }
     }
 }
