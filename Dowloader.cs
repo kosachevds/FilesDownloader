@@ -42,7 +42,7 @@ class Downloader
             lock(this.LogFilename)
             {
                 LogToFile(this.LogFilename,
-                    $"Downloading of {Path.GetFileName(filepath)} failed with {e}");
+                    $"\nDownloading of {Path.GetFileName(filepath)} failed with {e}\n");
             }
         }
     }
